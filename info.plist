@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.alfred.caffeine</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>2D4A5B6C-7E8F-9A0B-C1D2-E3F4A5B6C7D8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3E5B6C7D-8F9A-0B1C-D2E3-F4A5B6C7D8E9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>3E5B6C7D-8F9A-0B1C-D2E3-F4A5B6C7D8E9</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4F6C7D8E-9A0B-1C2D-E3F4-A5B6C7D8E9F0</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Claude</string>
+	<key>description</key>
+	<string>Prevent your Mac from sleeping. Toggle caffeinate on/off or set a timer.</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Caffeine</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryaliasaliasaliasaliasalias</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>caf</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyaliasaliasaliasalias</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Checking caffeine status...</string>
+				<key>script</key>
+				<string>python3 script_filter.py "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Keep your Mac awake</string>
+				<key>title</key>
+				<string>Caffeine</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>2D4A5B6C-7E8F-9A0B-C1D2-E3F4A5B6C7D8</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>bash action.sh "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>3E5B6C7D-8F9A-0B1C-D2E3-F4A5B6C7D8E9</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Caffeine</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>4F6C7D8E-9A0B-1C2D-E3F4-A5B6C7D8E9F0</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>## Caffeine for Alfred
+
+Prevent your Mac from sleeping using the built-in `caffeinate` command.
+
+### Usage
+
+Type `caf` in Alfred to see available options:
+
+- **Caffeinate** — Keep your Mac awake indefinitely
+- **Decaffeinate** — Stop keeping your Mac awake
+- **Toggle** — Toggle caffeination on/off
+- **caf 30** — Keep awake for 30 minutes
+- **caf 120** — Keep awake for 2 hours
+
+The workflow uses macOS's native `caffeinate` utility with flags:
+- `-d` prevent display sleep
+- `-i` prevent idle sleep
+- `-s` prevent system sleep (on AC power)
+</string>
+	<key>uidata</key>
+	<dict>
+		<key>2D4A5B6C-7E8F-9A0B-C1D2-E3F4A5B6C7D8</key>
+		<dict>
+			<key>xpos</key>
+			<real>100</real>
+			<key>ypos</key>
+			<real>200</real>
+		</dict>
+		<key>3E5B6C7D-8F9A-0B1C-D2E3-F4A5B6C7D8E9</key>
+		<dict>
+			<key>xpos</key>
+			<real>350</real>
+			<key>ypos</key>
+			<real>200</real>
+		</dict>
+		<key>4F6C7D8E-9A0B-1C2D-E3F4-A5B6C7D8E9F0</key>
+		<dict>
+			<key>xpos</key>
+			<real>600</real>
+			<key>ypos</key>
+			<real>200</real>
+		</dict>
+	</dict>
+	<key>version</key>
+	<string>1.0.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
