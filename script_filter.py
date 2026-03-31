@@ -78,9 +78,11 @@ def build_items(query):
                 end_dt = datetime.datetime.fromtimestamp(end_ts)
                 now = datetime.datetime.now()
                 remaining = end_dt - now
-                if remaining.total_seconds() > 0:
+                if remaining.total_seconds() > 60:
                     mins = int(remaining.total_seconds() / 60)
                     status_sub = f"~{format_duration(mins)} remaining (until {end_dt.strftime('%H:%M')})"
+                elif remaining.total_seconds() > 0:
+                    status_sub = f"Less than a minute remaining (until {end_dt.strftime('%H:%M')})"
                 else:
                     status_sub = "Timer expired"
             except (ValueError, OSError):
@@ -141,10 +143,14 @@ def build_items(query):
     except ValueError:
         pass
 
-    # Filter candidates by query
+    # Filter candidates by query (match title, subtitle, or arg)
     for item in candidates:
-        if not query or query in item["title"].lower():
+        if not query:
             items.append(item)
+        else:
+            searchable = item["title"].lower() + " " + item.get("subtitle", "").lower() + " " + item.get("arg", "").lower()
+            if query in searchable:
+                items.append(item)
 
     if not items:
         items.append({

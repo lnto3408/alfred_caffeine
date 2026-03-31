@@ -15,14 +15,14 @@ start_caffeinate() {
     # -s: prevent system sleep (on AC power)
     if [ -n "$1" ]; then
         local seconds=$(( $1 * 60 ))
-        /usr/bin/caffeinate -d -i -s -t "$seconds" &
+        nohup /usr/bin/caffeinate -d -i -s -t "$seconds" >/dev/null 2>&1 &
         local pid=$!
         echo "$pid" > "$PID_FILE"
         local end_time=$(python3 -c "import time; print(time.time() + $seconds)")
         printf "timed:%s\n%s\n" "$1" "$end_time" > "$INFO_FILE"
         echo "Caffeinated for $(format_duration $1)"
     else
-        /usr/bin/caffeinate -d -i -s &
+        nohup /usr/bin/caffeinate -d -i -s >/dev/null 2>&1 &
         local pid=$!
         echo "$pid" > "$PID_FILE"
         printf "indefinite\n" > "$INFO_FILE"
@@ -41,13 +41,12 @@ stop_caffeinate_silent() {
         pid=$(cat "$PID_FILE")
         if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then
             kill "$pid" 2>/dev/null
-            # Also kill any child caffeinate processes
+            wait "$pid" 2>/dev/null
+            # Kill any child processes
             pkill -P "$pid" 2>/dev/null
         fi
         rm -f "$PID_FILE" "$INFO_FILE"
     fi
-    # Also kill any orphaned caffeinate processes started by this workflow
-    # (safety net)
 }
 
 is_running() {
@@ -65,12 +64,20 @@ is_running() {
 format_duration() {
     local minutes=$1
     if [ "$minutes" -lt 60 ]; then
-        echo "${minutes} minute(s)"
+        if [ "$minutes" -eq 1 ]; then
+            echo "1 minute"
+        else
+            echo "${minutes} minutes"
+        fi
     else
         local hours=$((minutes / 60))
         local mins=$((minutes % 60))
         if [ "$mins" -eq 0 ]; then
-            echo "${hours} hour(s)"
+            if [ "$hours" -eq 1 ]; then
+                echo "1 hour"
+            else
+                echo "${hours} hours"
+            fi
         else
             echo "${hours}h ${mins}m"
         fi
